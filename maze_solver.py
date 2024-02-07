@@ -53,23 +53,23 @@ class Cell:
         self.has_right_wall = True
         self.win = win
 
-    def draw_cell(self):
-        top_left_point = Point(self.x_1, self.y_1)
-        top_right_point = Point(self.x_2, self.y_1)
-        bottom_right_point = Point(self.x_2, self.y_2)
-        bottom_left_point = Point(self.x_1, self.y_2)
+    def draw_cell(self, x_1, y_1, x_2, y_2):
+        self.x_1 = x_1
+        self.y_1 = y_1
+        self.x_2 = x_2
+        self.y_2 = y_2
         if self.has_top_wall:
-            top = Line(top_left_point, top_right_point)
-            top.draw(self.win, "red")
+            top = Line(Point(x_1, y_1), Point(x_2, y_1))
+            top.draw(self.win, "black")
         if self.has_left_wall:
-            left = Line(top_left_point, bottom_left_point)
-            left.draw(self.win, "red")
+            left = Line(Point(x_1, y_1), Point(x_1, y_2))
+            left.draw(self.win, "black")
         if self.has_bottom_wall:
-            bottom = Line(bottom_left_point, bottom_right_point)
-            bottom.draw(self.win, "red")
+            bottom = Line(Point(x_1, y_2), Point(x_2, y_2))
+            bottom.draw(self.win, "black")
         if self.has_right_wall:
-            right = Line(top_right_point, bottom_right_point)
-            right.draw(self.win, "red")
+            right = Line(Point(x_2, y_1), Point(x_2, y_2))
+            right.draw(self.win, "black")
 
     def draw_move(self, to_cell, undo=False):
         point_1 = Point((self.x_1 + self.x_2) / 2, (self.y_1 + self.y_2) / 2)
