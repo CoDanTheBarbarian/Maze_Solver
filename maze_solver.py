@@ -42,16 +42,16 @@ class Line:
         canvas.pack(expand=1, fill=BOTH)
         
 class Cell:
-    def __init__(self, point_1, point_2, canvas, top=True, left=True, bottom=True, right=True,):
-        self.x_1 = point_1.x
-        self.y_1 = point_1.y
-        self.x_2 = point_2.x
-        self.y_2 = point_2.y
-        self.has_top_wall = top
-        self.has_left_wall = left
-        self.has_bottom_wall = bottom
-        self.has_right_wall = right
-        self.win = canvas
+    def __init__(self, win):
+        self.x_1 = None
+        self.y_1 = None
+        self.x_2 = None
+        self.y_2 = None
+        self.has_top_wall = True
+        self.has_left_wall = True
+        self.has_bottom_wall = True
+        self.has_right_wall = True
+        self.win = win
 
     def draw_cell(self):
         top_left_point = Point(self.x_1, self.y_1)
