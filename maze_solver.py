@@ -72,14 +72,17 @@ class Cell:
             right.draw(self.win, "black")
 
     def draw_move(self, to_cell, undo=False):
-        point_1 = Point((self.x_1 + self.x_2) / 2, (self.y_1 + self.y_2) / 2)
-        point_2 = Point((to_cell.x_1 + to_cell.x_2) / 2, (to_cell.y_1 + to_cell.y_2) / 2)
-        foreward_path = Line(point_1, point_2)
-        reverse_path = Line(point_2, point_1)
-        if not undo:
-            foreward_path.draw(self.win, "red")
-        else:
-            reverse_path.draw(self.win, "gray")
+        starting_x = (self.x_1 + self.x_2) / 2
+        starting_y = (self.y_1 + self.y_2) / 2
+        ending_x = (to_cell.x_1 + to_cell.x_2) / 2
+        ending_y = (to_cell.y_1 + to_cell.y_2) / 2
+        
+        fill_color = "red"
+        if undo:
+            fill_color = "gray"
+        
+        line_forward = Line(Point(starting_x, starting_y), Point(ending_x, ending_y))
+        line_forward.draw(self.win, fill_color)
 
 def main():
     win = Window(800, 600)
