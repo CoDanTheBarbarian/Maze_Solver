@@ -3,26 +3,24 @@ from tkinter import Tk, BOTH, Canvas
 
 class Window:
     def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.root = Tk()
-        self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.root.title = ""
-        self.canvas = Canvas(self.root, width=self.width, height=self.height)
-        self.canvas.pack(expand=1, fill=BOTH)
-        self.running = False
+        self.__root = Tk()
+        self.__root.protocol("WM_DELETE_WINDOW", self.close)
+        self.__root.title = "Maze Solver"
+        self.__canvas = Canvas(self.root, width=self.width, height=self.height)
+        self.__canvas.pack(expand=1, fill=BOTH)
+        self.__running = False
 
     def redraw(self):
-        self.root.update_idletasks()
-        self.root.update()
+        self.__root.update_idletasks()
+        self.__root.update()
 
     def wait_for_close(self):
-        self.running = True
-        while self.running is True:
+        self.__running = True
+        while self.__running is True:
             self.redraw()
 
     def close(self):
-        self.running = False
+        self.__running = False
 
     def draw_line(self, line, color):
         line.draw(self.canvas, color)
