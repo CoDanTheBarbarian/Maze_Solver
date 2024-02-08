@@ -55,6 +55,8 @@ class Cell:
         self.win = win
 
     def draw_cell(self, x_1, y_1, x_2, y_2):
+        if self.win is None:
+            return
         self.x_1 = x_1
         self.y_1 = y_1
         self.x_2 = x_2
@@ -73,6 +75,8 @@ class Cell:
             right.draw(self.win, "black")
 
     def draw_move(self, to_cell, undo=False):
+        if self.win is None:
+            return
         starting_x = (self.x_1 + self.x_2) / 2
         starting_y = (self.y_1 + self.y_2) / 2
         ending_x = (to_cell.x_1 + to_cell.x_2) / 2
@@ -103,28 +107,27 @@ class Maze:
         self.cell_x_size = cell_x_size
         self.cell_y_size = cell_y_size
         self.win = win
+        self._cells = []
 
     def _create_cells(self):
-        self._cells = []
         for i in range(self.num_columns):
-            collected_coordinates = []
+            cell_column = []
             for j in range(self.num_rows):
-                collected_coordinates.append(
-                    i * self.cell_x_size, 
-                    j * self.cell_y_size, 
-                    )
-            coordinate_set = set(collected_coordinates)
-            self._cells.append(coordinate_set)
-        for i in self._cells:
-            self._draw_cell(i[0], i[1])
+                cell = Cell(self.win)
+                cell_column.append(cell)
+            self._cells.append(cell_column)
+        for i in self.num_columns:
+            for j in self.num_rows:
+                self._draw_cell(i, j)
 
     def _draw_cell(self, i, j):
+        if self.win is None:
+            return
         cell_x1 = self.x_1 + i * self.cell_x_size
         cell_y1 = self.y_1 + j * self.cell_y_size
         cell_x2 = cell_x1 + self.cell_x_size
         cell_y2 = cell_y1 + self.cell_y_size
-        cell = Cell()
-        cell.draw_cell(cell_x1, cell_y1, cell_x2, cell_y2)
+        self.cells[i][j].draw_cell(cell_x1, cell_y1, cell_x2, cell_y2)
         self._animate()
 
     def _animate(self):
