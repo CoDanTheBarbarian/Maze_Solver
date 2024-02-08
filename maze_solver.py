@@ -84,6 +84,44 @@ class Cell:
         line_forward = Line(Point(starting_x, starting_y), Point(ending_x, ending_y))
         line_forward.draw(self.win, fill_color)
 
+class Maze:
+    def __init__(
+            self,
+            x_1,
+            y_1,
+            num_rows,
+            num_columns,
+            cell_x_size,
+            cell_y_size,
+            win,
+    ):
+        self.x_1 = x_1
+        self.y_1 = y_1
+        self.num_rows = num_rows
+        self.num_columns = num_columns
+        self.cell_x_size = cell_x_size
+        self.cell_y_size = cell_y_size
+        self.win = win
+
+    def _create_cells(self):
+        self._cells = []
+        original_y_value = self.y_1
+        for i in range(0, self.num_columns + 1, self.cell_x_size):
+            for j in range(0, self.num_rows + 1, self.cell_y_size):
+                self.y_1 = original_y_value
+                collected_coordinates = []
+                collected_coordinates.append(self.x_1, self.y_1, self.x_1 + self.cell_x_size, self.y_1 + self.cell_y_size)
+                self.y_1 = self.y_1 + self.cell_y_size
+                coordinate_set = set(collected_coordinates)
+                self._cells.append(coordinate_set)
+                collected_coordinates.append()
+            self.x_1 = self.x_1 + self.cell_x_size
+
+
+
+
+
+
 def main():
     win = Window(800, 600)
     win.wait_for_close()
