@@ -1,5 +1,6 @@
 # Maze Solver
 from tkinter import Tk, BOTH, Canvas
+import time
 
 class Window:
     def __init__(self, width, height):
@@ -105,17 +106,32 @@ class Maze:
 
     def _create_cells(self):
         self._cells = []
-        original_y_value = self.y_1
-        for i in range(0, self.num_columns + 1, self.cell_x_size):
-            for j in range(0, self.num_rows + 1, self.cell_y_size):
-                self.y_1 = original_y_value
-                collected_coordinates = []
-                collected_coordinates.append(self.x_1, self.y_1, self.x_1 + self.cell_x_size, self.y_1 + self.cell_y_size)
-                self.y_1 = self.y_1 + self.cell_y_size
-                coordinate_set = set(collected_coordinates)
-                self._cells.append(coordinate_set)
-                collected_coordinates.append()
-            self.x_1 = self.x_1 + self.cell_x_size
+        for i in range(self.num_columns):
+            collected_coordinates = []
+            for j in range(self.num_rows):
+                collected_coordinates.append(
+                    i * self.cell_x_size, 
+                    j * self.cell_y_size, 
+                    )
+            coordinate_set = set(collected_coordinates)
+            self._cells.append(coordinate_set)
+        for i in self._cells:
+            self._draw_cell(i[0], i[1])
+
+    def _draw_cell(self, i, j):
+        cell_x1 = self.x_1 + i * self.cell_x_size
+        cell_y1 = self.y_1 + j * self.cell_y_size
+        cell_x2 = cell_x1 + self.cell_x_size
+        cell_y2 = cell_y1 + self.cell_y_size
+        cell = Cell()
+        cell.draw_cell(cell_x1, cell_y1, cell_x2, cell_y2)
+        self._animate()
+
+    def _animate(self):
+        self.win.redraw()
+        time.sleep(.05)
+
+
 
 
 
