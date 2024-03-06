@@ -23,13 +23,12 @@ class Maze:
         self.win = win
         self._cells = []
         if seed:
-            self._seed = seed
-        else:
             self._seed = random.seed(seed)
 
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
+        self._reset_cells_visited()
 
     def _create_cells(self):
         for i in range(self.num_columns):
@@ -88,12 +87,7 @@ class Maze:
             if len(to_visit) == 0:
                 # if so draw the current cell
                 current_cell.draw(current_cell.x_1, current_cell.y_1, current_cell.x_2, current_cell.y_2)
-                # check to see if any of the cells have not been visited
-                for cols in self._cells:
-                    for rows in cols:
-                        # if it finds any that haven't been visited than call the break_walls_r method on that cell
-                        if self._cells[cols][rows].visited is False:
-                            self._break_walls_r(cols, rows) # fixed that. that was not how you call that method
+                
                     # if you don't find any cells that haven't been visited then stop the loop
                 return
             # If the visited list is not empty
@@ -120,3 +114,7 @@ class Maze:
                 # call the creak walls function on the coordinates of our random cell
                 self._break_walls_r(random_cell[0], random_cell[1])
         
+    def _reset_cells_visited(self):
+         for i in self._cells:
+              for cell in i:
+                   cell.visited = False
