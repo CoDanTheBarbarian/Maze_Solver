@@ -14,7 +14,7 @@ def main():
     sys.setrecursionlimit(10000)
     win = Window(screen_x, screen_y)
     
-    maze = Maze(margin, margin, num_rows, num_columns, cell_x_size, cell_y_size, win, 10)
+    maze = Maze(margin, margin, num_rows, num_columns, cell_x_size, cell_y_size, win)
     print("Maze created")
     is_solvable = maze.solve()
     if not is_solvable:
